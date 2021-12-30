@@ -26,16 +26,19 @@ class E131LightEffectBase {
   int get_first_universe() const;
   int get_last_universe() const;
   virtual int get_universe_count() const = 0;
+  bool get_use_brightness() const;
 
   void set_first_universe(int universe) { this->first_universe_ = universe; }
   void set_channels(E131LightChannels channels) { this->channels_ = channels; }
   void set_e131(E131Component *e131) { this->e131_ = e131; }
+  void set_use_brightness(bool use_brightness) { this->use_brightness_ = use_brightness; }
 
  protected:
   int first_universe_{0};
   int last_universe_{0};
   E131LightChannels channels_{E131_RGB};
   E131Component *e131_{nullptr};
+  bool use_brightness_ {false};
 
   virtual bool process(int universe, const E131Packet &packet) = 0;
 
