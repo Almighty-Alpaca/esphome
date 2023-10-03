@@ -1187,6 +1187,17 @@ light:
           uart_id: uart_3
       - e131:
           universe: 1
+      - addressable_e131:
+          universe: 2
+  - platform: rgb
+    name: RGB Light
+    red: pca_0
+    green: pca_1
+    blue: pca_2
+    effects:
+      - e131:
+          universe: 1
+          channels: RGB
   - platform: hbridge
     name: Icicle Lights
     pin_a: out
