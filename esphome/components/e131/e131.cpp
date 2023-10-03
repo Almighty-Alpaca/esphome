@@ -1,6 +1,6 @@
 #include "e131.h"
 #ifdef USE_NETWORK
-#include "e131_addressable_light_effect.h"
+#include "e131_light_effect_base.h"
 #include "esphome/core/log.h"
 
 #include <algorithm>
@@ -87,7 +87,7 @@ void E131Component::loop() {
   }
 }
 
-void E131Component::add_effect(E131AddressableLightEffect *light_effect) {
+void E131Component::add_effect(E131LightEffectBase *light_effect) {
   if (std::find(light_effects_.begin(), light_effects_.end(), light_effect) != light_effects_.end()) {
     return;
   }
@@ -103,7 +103,7 @@ void E131Component::add_effect(E131AddressableLightEffect *light_effect) {
   }
 }
 
-void E131Component::remove_effect(E131AddressableLightEffect *light_effect) {
+void E131Component::remove_effect(E131LightEffectBase *light_effect) {
   auto it = std::find(light_effects_.begin(), light_effects_.end(), light_effect);
   if (it == light_effects_.end()) {
     return;

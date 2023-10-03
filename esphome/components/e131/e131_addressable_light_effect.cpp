@@ -7,38 +7,25 @@ namespace esphome {
 namespace e131 {
 
 static const char *const TAG = "e131_addressable_light_effect";
-static const int MAX_DATA_SIZE = (sizeof(E131Packet::values) - 1);
 
 E131AddressableLightEffect::E131AddressableLightEffect(const char *name) : AddressableLightEffect(name) {}
 
-int E131AddressableLightEffect::get_data_per_universe() const { return get_lights_per_universe() * channels_; }
+const StringRef E131AddressableLightEffect::get_name() { return AddressableLightEffect::get_name(); }
 
-int E131AddressableLightEffect::get_lights_per_universe() const { return MAX_DATA_SIZE / channels_; }
+void E131AddressableLightEffect::start() {
+  AddressableLightEffect::start();
+  E131LightEffectBase::start();
+}
 
-int E131AddressableLightEffect::get_first_universe() const { return first_universe_; }
-
-int E131AddressableLightEffect::get_last_universe() const { return first_universe_ + get_universe_count() - 1; }
+void E131AddressableLightEffect::stop() {
+  E131LightEffectBase::stop();
+  AddressableLightEffect::stop();
+}
 
 int E131AddressableLightEffect::get_universe_count() const {
   // Round up to lights_per_universe
   auto lights = get_lights_per_universe();
   return (get_addressable_()->size() + lights - 1) / lights;
-}
-
-void E131AddressableLightEffect::start() {
-  AddressableLightEffect::start();
-
-  if (this->e131_) {
-    this->e131_->add_effect(this);
-  }
-}
-
-void E131AddressableLightEffect::stop() {
-  if (this->e131_) {
-    this->e131_->remove_effect(this);
-  }
-
-  AddressableLightEffect::stop();
 }
 
 void E131AddressableLightEffect::apply(light::AddressableLight &it, const Color &current_color) {
@@ -57,7 +44,7 @@ bool E131AddressableLightEffect::process_(int universe, const E131Packet &packet
   // packet.count is the number of DMX bytes including start code; divide by channels to get the number of lights
   int lights_in_packet = (packet.count > 0) ? (packet.count - 1) / channels_ : 0;
   int output_end =
-      std::min(it->size(), std::min(output_offset + get_lights_per_universe(), output_offset + lights_in_packet));
+      std::min(it->size(), static_cast<std::int32_t>(std::min(output_offset + get_lights_per_universe(), output_offset + lights_in_packet)));
   auto *input_data = packet.values + 1;
 
   auto effect_name = get_name();
@@ -89,6 +76,7 @@ bool E131AddressableLightEffect::process_(int universe, const E131Packet &packet
   }
 
   it->schedule_show();
+
   return true;
 }
 
