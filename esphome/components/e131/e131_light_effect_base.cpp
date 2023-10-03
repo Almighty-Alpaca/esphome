@@ -28,5 +28,7 @@ int E131LightEffectBase::get_first_universe() const { return first_universe_; }
 
 int E131LightEffectBase::get_last_universe() const { return first_universe_ + get_universe_count() - 1; }
 
+bool E131LightEffectBase::get_use_brightness() const { return use_brightness_; }
+
 }  // namespace e131
 }  // namespace esphome

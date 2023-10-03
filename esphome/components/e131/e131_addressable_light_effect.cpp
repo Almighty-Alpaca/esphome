@@ -47,11 +47,17 @@ bool E131AddressableLightEffect::process(int universe, const E131Packet &packet)
   ESP_LOGV(TAG, "Applying data for '%s' on %d universe, for %" PRId32 "-%d.", get_name().c_str(), universe,
            output_offset, output_end);
 
+  uint8_t brightness_factor = 255;
+
+  if (this->use_brightness_) {
+    brightness_factor *= this->state_->remote_values.get_brightness();
+  }
+
   switch (channels_) {
     case E131_MONO:
       for (; output_offset < output_end; output_offset++, input_data++) {
         auto output = (*it)[output_offset];
-        output.set(Color(input_data[0], input_data[0], input_data[0], input_data[0]));
+        output.set(Color(input_data[0], input_data[0], input_data[0], input_data[0]) * brightness_factor);
       }
       break;
 
@@ -59,14 +65,14 @@ bool E131AddressableLightEffect::process(int universe, const E131Packet &packet)
       for (; output_offset < output_end; output_offset++, input_data += 3) {
         auto output = (*it)[output_offset];
         output.set(
-            Color(input_data[0], input_data[1], input_data[2], (input_data[0] + input_data[1] + input_data[2]) / 3));
+            Color(input_data[0], input_data[1], input_data[2], (input_data[0] + input_data[1] + input_data[2]) / 3) * brightness_factor);
       }
       break;
 
     case E131_RGBW:
       for (; output_offset < output_end; output_offset++, input_data += 4) {
         auto output = (*it)[output_offset];
-        output.set(Color(input_data[0], input_data[1], input_data[2], input_data[3]));
+        output.set(Color(input_data[0], input_data[1], input_data[2], input_data[3]) * brightness_factor);
       }
       break;
   }

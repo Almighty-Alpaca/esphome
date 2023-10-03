@@ -43,35 +43,40 @@ bool E131LightEffect::process(int universe, const E131Packet &packet) {
 
   auto call = this->state_->turn_on();
 
+  float brightness_factor = 255.0;
+
+  if (this->use_brightness_) {
+    brightness_factor /= this->state_->remote_values.get_brightness();
+  }
+
   switch (channels_) {
     case E131_MONO:
       if (output_offset < output_end) {
-        call.set_red_if_supported(input_data[0] / 255.0);
-        call.set_green_if_supported(input_data[0] / 255.0);
-        call.set_blue_if_supported(input_data[0] / 255.0);
-        call.set_white_if_supported(input_data[0] / 255.0);
-        call.set_brightness_if_supported(input_data[0] / 255.0);
+        call.set_red_if_supported(input_data[0] / brightness_factor);
+        call.set_green_if_supported(input_data[0] / brightness_factor);
+        call.set_blue_if_supported(input_data[0] / brightness_factor);
+        call.set_white_if_supported(input_data[0] / brightness_factor);
+        call.set_brightness_if_supported(input_data[0] / brightness_factor);
       }
       break;
 
     case E131_RGB:
       if (output_offset < output_end) {
-        call.set_red_if_supported(input_data[0] / 255.0);
-        call.set_green_if_supported(input_data[1] / 255.0);
-        call.set_blue_if_supported(input_data[2] / 255.0);
-        call.set_white_if_supported((input_data[0] + input_data[1] + input_data[2]) / 3.0 / 255.0);
-        call.set_brightness_if_supported(std::max(input_data[0], std::max(input_data[1], input_data[2])) / 255.0);
+        call.set_red_if_supported(input_data[0] / brightness_factor);
+        call.set_green_if_supported(input_data[1] / brightness_factor);
+        call.set_blue_if_supported(input_data[2] / brightness_factor);
+        call.set_white_if_supported((input_data[0] + input_data[1] + input_data[2]) / 3.0 / brightness_factor);
+        call.set_brightness_if_supported(std::max(input_data[0], std::max(input_data[1], input_data[2])) / brightness_factor);
       }
       break;
 
     case E131_RGBW:
       if (output_offset < output_end) {
-        call.set_red_if_supported(input_data[0] / 255.0);
-        call.set_green_if_supported(input_data[1] / 255.0);
-        call.set_blue_if_supported(input_data[2] / 255.0);
-        call.set_white_if_supported(input_data[3] / 255.0);
-        call.set_brightness_if_supported(
-            std::max(input_data[0], std::max(input_data[1], std::max(input_data[2], input_data[3]))) / 255.0);
+        call.set_red_if_supported(input_data[0] / brightness_factor);
+        call.set_green_if_supported(input_data[1] / brightness_factor);
+        call.set_blue_if_supported(input_data[2] / brightness_factor);
+        call.set_white_if_supported(input_data[3] / brightness_factor);
+        call.set_brightness_if_supported(std::max(input_data[0], std::max(input_data[1], std::max(input_data[2], input_data[3]))) / brightness_factor);
       }
       break;
   }
