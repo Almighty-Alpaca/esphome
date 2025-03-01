@@ -11,3 +11,5 @@ light:
     effects:
       - e131:
           universe: 1
+      - addressable_e131:
+          universe: 2
