@@ -1,0 +1,9 @@
+- platform: ledc
+  id: test_ledc_1
+  pin: 3
+- platform: ledc
+  id: test_ledc_2
+  pin: 4
+- platform: ledc
+  id: test_ledc_3
+  pin: 5

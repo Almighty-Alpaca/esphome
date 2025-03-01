@@ -3,3 +3,11 @@ wifi:
   password: password1
 
 e131:
+
+light:
+  - platform: rgb
+    id: test_rgb_light
+    name: RGB Light
+    red: test_ledc_1
+    green: test_ledc_2
+    blue: test_ledc_3

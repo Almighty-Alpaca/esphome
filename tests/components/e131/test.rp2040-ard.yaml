@@ -1,5 +1,8 @@
 <<: !include common.yaml
 
+output:
+  <<: !include output-rp2040.yaml
+
 light:
   - platform: rp2040_pio_led_strip
     id: led_strip
@@ -11,3 +14,5 @@ light:
     effects:
       - e131:
           universe: 1
+      - addressable_e131:
+          universe: 2

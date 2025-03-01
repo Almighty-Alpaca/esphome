@@ -2,4 +2,7 @@ substitutions:
   light_platform: esp32_rmt_led_strip
   pin: GPIO2
 
+output:
+  <<: !include output-esp32.yaml
+
 <<: !include common-idf.yaml
