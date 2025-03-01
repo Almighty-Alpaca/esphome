@@ -1,5 +1,8 @@
 <<: !include common.yaml
 
+output:
+  <<: !include output-esp8266.yaml
+
 light:
   - platform: neopixelbus
     name: Neopixelbus Light

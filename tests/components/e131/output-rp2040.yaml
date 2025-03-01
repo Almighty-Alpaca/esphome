@@ -1,0 +1,9 @@
+- platform: rp2040_pwm
+  id: test_ledc_1
+  pin: 1
+- platform: rp2040_pwm
+  id: test_ledc_2
+  pin: 2
+- platform: rp2040_pwm
+  id: test_ledc_3
+  pin: 3

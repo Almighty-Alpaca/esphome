@@ -1,0 +1,9 @@
+- platform: esp8266_pwm
+  id: test_ledc_1
+  pin: 12
+- platform: esp8266_pwm
+  id: test_ledc_2
+  pin: 13
+- platform: esp8266_pwm
+  id: test_ledc_3
+  pin: 14
