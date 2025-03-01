@@ -17,12 +17,12 @@ class E131AddressableLightEffect : public E131LightEffectBase, public light::Add
   void start() override;
   void stop() override;
 
-  int get_universe_count() const override;
+  int32_t get_universe_count() const override;
 
   void apply(light::AddressableLight &it, const Color &current_color) override;
 
  protected:
-  bool process(int universe, const E131Packet &packet) override;
+  bool process(int32_t universe, const E131Packet &packet) override;
 };
 
 }  // namespace e131

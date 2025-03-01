@@ -22,7 +22,7 @@ void E131AddressableLightEffect::stop() {
   AddressableLightEffect::stop();
 }
 
-int E131AddressableLightEffect::get_universe_count() const {
+int32_t E131AddressableLightEffect::get_universe_count() const {
   // Round up to lights_per_universe
   auto lights = get_lights_per_universe();
   return (get_addressable_()->size() + lights - 1) / lights;
@@ -32,7 +32,7 @@ void E131AddressableLightEffect::apply(light::AddressableLight &it, const Color 
   // ignore, it is run by `E131Component::update()`
 }
 
-bool E131AddressableLightEffect::process(int universe, const E131Packet &packet) {
+bool E131AddressableLightEffect::process(int32_t universe, const E131Packet &packet) {
   auto *it = get_addressable_();
 
   // check if this is our universe and data are valid

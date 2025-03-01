@@ -18,10 +18,10 @@ class E131LightEffect : public E131LightEffectBase, public light::LightEffect {
   void stop() override;
   void apply() override;
 
-  int get_universe_count() const override;
+  int32_t get_universe_count() const override;
 
  protected:
-  bool process(int universe, const E131Packet &packet) override;
+  bool process(int32_t universe, const E131Packet &packet) override;
 };
 
 }  // namespace e131

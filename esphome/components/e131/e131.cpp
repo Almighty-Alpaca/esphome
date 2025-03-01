@@ -55,7 +55,7 @@ void E131Component::setup() {
 void E131Component::loop() {
   std::vector<uint8_t> payload;
   E131Packet packet;
-  int universe = 0;
+  int32_t universe = 0;
   uint8_t buf[1460];
 
   ssize_t len = this->socket_->read(buf, sizeof(buf));
@@ -105,7 +105,7 @@ void E131Component::remove_effect(E131LightEffectBase *light_effect) {
   }
 }
 
-bool E131Component::process_(int universe, const E131Packet &packet) {
+bool E131Component::process_(int32_t universe, const E131Packet &packet) {
   bool handled = false;
 
   ESP_LOGV(TAG, "Received E1.31 packet for %d universe, with %d bytes", universe, packet.count);

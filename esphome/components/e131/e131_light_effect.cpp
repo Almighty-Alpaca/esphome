@@ -6,7 +6,7 @@ namespace esphome {
 namespace e131 {
 
 static const char *const TAG = "e131_light_effect";
-static const int MAX_DATA_SIZE = (sizeof(E131Packet::values) - 1);
+static const int32_t MAX_DATA_SIZE = (sizeof(E131Packet::values) - 1);
 
 E131LightEffect::E131LightEffect(const std::string &name) : LightEffect(name) {}
 
@@ -26,17 +26,17 @@ void E131LightEffect::apply() {
   // ignore, it is run by `E131Component::update()`
 }
 
-int E131LightEffect::get_universe_count() const { return 1; }
+int32_t E131LightEffect::get_universe_count() const { return 1; }
 
-bool E131LightEffect::process(int universe, const E131Packet &packet) {
+bool E131LightEffect::process(int32_t universe, const E131Packet &packet) {
   // check if this is our universe and data are valid
   if (universe < first_universe_ || universe > get_last_universe())
     return false;
 
-  const auto output_offset = (universe - first_universe_) * get_lights_per_universe();
+  const int32_t output_offset = (universe - first_universe_) * get_lights_per_universe();
   // limit amount of lights per universe and received
   const auto output_end =
-      std::min(1, std::min(output_offset + get_lights_per_universe(), output_offset + packet.count - 1));
+      std::min((int32_t) 1, std::min(output_offset + get_lights_per_universe(), output_offset + packet.count - 1));
   const auto *input_data = packet.values + 1;
 
   ESP_LOGV(TAG, "Applying data for '%s' on %d universe, for %d-%d.", get_name().c_str(), universe, output_offset,

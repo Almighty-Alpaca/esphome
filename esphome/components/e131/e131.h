@@ -17,7 +17,7 @@ class E131LightEffectBase;
 
 enum E131ListenMethod { E131_MULTICAST, E131_UNICAST };
 
-const int E131_MAX_PROPERTY_VALUES_COUNT = 513;
+const int32_t E131_MAX_PROPERTY_VALUES_COUNT = 513;
 
 struct E131Packet {
   uint16_t count;
@@ -39,17 +39,16 @@ class E131Component : public esphome::Component {
   void set_method(E131ListenMethod listen_method) { this->listen_method_ = listen_method; }
 
  protected:
-  bool packet_(const std::vector<uint8_t> &data, int &universe, E131Packet &packet);
-  bool process_(int universe, const E131Packet &packet);
+  bool packet_(const std::vector<uint8_t> &data, int32_t &universe, E131Packet &packet);
+  bool process_(int32_t universe, const E131Packet &packet);
   bool join_igmp_groups_();
-  void join_(int universe);
-  void leave_(int universe);
+  void join_(int32_t universe);
+  void leave_(int32_t universe);
 
   E131ListenMethod listen_method_{E131_MULTICAST};
   std::unique_ptr<socket::Socket> socket_;
   std::set<E131LightEffectBase *> light_effects_;
-  std::map<int, int> universe_consumers_;
-  std::map<int, E131Packet> universe_packets_;
+  std::map<int32_t, int32_t> universe_consumers_;
 };
 
 }  // namespace e131

@@ -21,23 +21,23 @@ class E131LightEffectBase {
   virtual void start();
   virtual void stop();
 
-  int get_data_per_universe() const;
-  int get_lights_per_universe() const;
-  int get_first_universe() const;
-  int get_last_universe() const;
-  virtual int get_universe_count() const = 0;
+  int32_t get_data_per_universe() const;
+  int32_t get_lights_per_universe() const;
+  int32_t get_first_universe() const;
+  int32_t get_last_universe() const;
+  virtual int32_t get_universe_count() const = 0;
 
-  void set_first_universe(int universe) { this->first_universe_ = universe; }
+  void set_first_universe(int32_t universe) { this->first_universe_ = universe; }
   void set_channels(E131LightChannels channels) { this->channels_ = channels; }
   void set_e131(E131Component *e131) { this->e131_ = e131; }
 
  protected:
-  int first_universe_{0};
-  int last_universe_{0};
+  int32_t first_universe_{0};
+  int32_t last_universe_{0};
   E131LightChannels channels_{E131_RGB};
   E131Component *e131_{nullptr};
 
-  virtual bool process(int universe, const E131Packet &packet) = 0;
+  virtual bool process(int32_t universe, const E131Packet &packet) = 0;
 
   friend class E131Component;
 };

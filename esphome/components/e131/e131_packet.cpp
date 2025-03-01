@@ -86,7 +86,7 @@ bool E131Component::join_igmp_groups_() {
   return true;
 }
 
-void E131Component::join_(int universe) {
+void E131Component::join_(int32_t universe) {
   // store only latest received packet for the given universe
   auto consumers = ++universe_consumers_[universe];
 
@@ -99,7 +99,7 @@ void E131Component::join_(int universe) {
   }
 }
 
-void E131Component::leave_(int universe) {
+void E131Component::leave_(int32_t universe) {
   auto consumers = --universe_consumers_[universe];
 
   if (consumers > 0) {
@@ -116,7 +116,7 @@ void E131Component::leave_(int universe) {
   ESP_LOGD(TAG, "Left %d universe for E1.31.", universe);
 }
 
-bool E131Component::packet_(const std::vector<uint8_t> &data, int &universe, E131Packet &packet) {
+bool E131Component::packet_(const std::vector<uint8_t> &data, int32_t &universe, E131Packet &packet) {
   if (data.size() < E131_MIN_PACKET_SIZE)
     return false;
 
