@@ -39,13 +39,13 @@ bool E131AddressableLightEffect::process(int universe, const E131Packet &packet)
   if (universe < first_universe_ || universe > get_last_universe())
     return false;
 
-  int32_t output_offset = (universe - first_universe_) * get_lights_per_universe();
+  auto output_offset = (universe - first_universe_) * get_lights_per_universe();
   // limit amount of lights per universe and received
   // packet.count is the number of DMX bytes including start code; divide by channels to get the number of lights
   int lights_in_packet = (packet.count > 0) ? (packet.count - 1) / channels_ : 0;
-  int output_end =
+  const auto output_end =
       std::min(it->size(), static_cast<std::int32_t>(std::min(output_offset + get_lights_per_universe(), output_offset + lights_in_packet)));
-  auto *input_data = packet.values + 1;
+  const auto *input_data = packet.values + 1;
 
   auto effect_name = get_name();
   ESP_LOGV(TAG, "Applying data for '%.*s' on %d universe, for %" PRId32 "-%d.", (int) effect_name.size(),
