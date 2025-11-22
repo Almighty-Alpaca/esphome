@@ -80,8 +80,10 @@ void E131Component::add_effect(E131LightEffectBase *light_effect) {
     return;
   }
 
-  ESP_LOGD(TAG, "Registering '%s' for universes %d-%d.", light_effect->get_name().c_str(),
-           light_effect->get_first_universe(), light_effect->get_last_universe());
+  ESP_LOGD(TAG, "Registering '%s' for universes %d-%d.",
+         light_effect->get_name(),
+         light_effect->first_universe_,
+         light_effect->get_last_universe());
 
   light_effects_.insert(light_effect);
 
@@ -95,8 +97,10 @@ void E131Component::remove_effect(E131LightEffectBase *light_effect) {
     return;
   }
 
-  ESP_LOGD(TAG, "Unregistering '%s' for universes %d-%d.", light_effect->get_name().c_str(),
-           light_effect->get_first_universe(), light_effect->get_last_universe());
+  ESP_LOGD(TAG, "Unregistering '%s' for universes %d-%d.",
+         light_effect->get_name(),
+         light_effect->first_universe_,
+         light_effect->get_last_universe());
 
   light_effects_.erase(light_effect);
 
@@ -104,6 +108,7 @@ void E131Component::remove_effect(E131LightEffectBase *light_effect) {
     leave_(universe);
   }
 }
+
 
 bool E131Component::process_(int32_t universe, const E131Packet &packet) {
   bool handled = false;
