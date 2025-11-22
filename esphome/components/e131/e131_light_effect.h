@@ -10,9 +10,11 @@ namespace e131 {
 
 class E131LightEffect : public E131LightEffectBase, public light::LightEffect {
  public:
-  E131LightEffect(const std::string &name);
+  // Updated to use const char* as required by ESPHome 2025.11.0+
+  E131LightEffect(const char *name);
 
-  const std::string &get_name() override;
+  // Updated return type (ESPHome no longer returns std::string)
+  const char *get_name() override;
 
   void start() override;
   void stop() override;
