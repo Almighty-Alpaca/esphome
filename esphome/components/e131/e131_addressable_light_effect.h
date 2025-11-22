@@ -10,9 +10,9 @@ namespace e131 {
 
 class E131AddressableLightEffect : public E131LightEffectBase, public light::AddressableLightEffect {
  public:
-  E131AddressableLightEffect(const std::string &name);
+  E131AddressableLightEffect(const char *name);
 
-  const std::string &get_name() override;
+  const char *get_name() override;
 
   void start() override;
   void stop() override;
